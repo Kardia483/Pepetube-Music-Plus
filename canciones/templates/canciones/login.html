@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión — PepeTube Music Plus{% endblock %}
+
+{% block content %}
+
+    <section class="card auth">
+        <h2>Iniciar sesión</h2>
+
+        {% if form.errors %}
+            <p class="errores">Usuario o contraseña incorrectos. Inténtalo de nuevo.</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-solid">Entrar</button>
+        </form>
+
+        <p class="ayuda">¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
+    </section>
+
+{% endblock %}

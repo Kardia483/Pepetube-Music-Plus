@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Crear cuenta — PepeTube Music Plus{% endblock %}
+
+{% block content %}
+
+    <section class="card auth">
+        <h2>Crear cuenta</h2>
+
+        <form method="post" enctype="multipart/form-data" action="{% url 'registro' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-solid">Registrarme</button>
+        </form>
+
+        <p class="ayuda">¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a></p>
+    </section>
+
+{% endblock %}

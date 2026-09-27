@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mi playlist — PepeTube Music Plus{% endblock %}
+
+{% block content %}
+
+    <section class="card">
+        <h2>Agregar canción</h2>
+        <form class="agregar" method="post" enctype="multipart/form-data" action="{% url 'lista_canciones' %}">
+            {% csrf_token %}
+            <input type="text" name="titulo" placeholder="Título de la canción" required>
+            <input type="text" name="artista" placeholder="Artista" required>
+            <input type="file" name="imagen" accept="image/*">
+            <button type="submit" class="btn-solid">Agregar</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Tu playlist</h2>
+        <ul class="playlist">
+            {% for cancion in canciones %}
+                <li>
+                    <div class="info-cancion">
+                        {% if cancion.imagen %}
+                            <img class="avatar" src="{{ cancion.imagen.url }}" alt="Portada de {{ cancion.titulo }}"
+                                 style="width:44px;height:44px;border-radius:6px;object-fit:cover;border:none;">
+                        {% endif %}
+                        <span class="titulo">{{ cancion.titulo }}</span>
+                        <span class="artista">{{ cancion.artista }}</span>
+                        {% if cancion.duracion %}
+                            <span class="duracion">{{ cancion.duracion }}</span>
+                        {% endif %}
+                    </div>
+                    <form class="borrar" method="post" action="{% url 'borrar_cancion' cancion.id %}">
+                        {% csrf_token %}
+                        <button type="submit" title="Eliminar canción">🗑</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li class="vacio">Todavía no has agregado ninguna canción.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+{% endblock %}
